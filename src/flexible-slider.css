@@ -83,7 +83,6 @@
 }
 
 .flx-slider-gallery .flx-slide{
-  visibility: hidden;
   position: absolute;
   top: 0;
   left: 0;
@@ -92,7 +91,6 @@
 }
 .flx-slider-gallery .flx-slide-active{
     position: relative;
-    visibility: visible;
     opacity: 1;
  } 
 
