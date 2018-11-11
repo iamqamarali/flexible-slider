@@ -2,7 +2,7 @@
   
 }
 .flx-slider-inner{
-  
+  overflow: hidden
 }
 
 /* slider */
@@ -10,22 +10,9 @@
   
 }
 
-.flx-slider-gallery{
-  
-}
-
-.flx-slider-slider{
-  
-}
-
-.flx-slider-carousel{
-  
-}
-
-
 /* slide */
 .flx-slide{
-  
+
 }
 
 .flx-slide-active{
@@ -89,3 +76,34 @@
   
 }
 
+
+/* gallery styles */
+.flx-slider-gallery{
+  position: relative;
+}
+
+.flx-slider-gallery .flx-slide{
+  visibility: hidden;
+  position: absolute;
+  top: 0;
+  left: 0;
+  transition: all 2s ease;
+  opacity: 0
+}
+.flx-slider-gallery .flx-slide-active{
+    position: relative;
+    visibility: visible;
+    opacity: 1;
+ } 
+
+
+
+
+/* slider Stypes */
+.flx-slider-slider{
+  
+}
+
+.flx-slider-carousel{
+  
+}
