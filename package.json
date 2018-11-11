@@ -1,6 +1,6 @@
 {
   "name": "flexible-sliderjs",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "An easy to use JavaScript package for building amazing sliders/carousels/galleries",
   "main": "src/flexible-slider.js",
   "scripts": {
