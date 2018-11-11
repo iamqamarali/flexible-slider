@@ -2,8 +2,9 @@
   
     if(typeof window != 'undefined')
       window.FlexibleSlider = factory()
-    else if(typeof exports == 'object'  )
-      modules.exports.FlexibleSlider = factory()  
+    if(typeof exports == 'object'  ){
+      module.exports = factory()  
+    }
     
   })(function(){
     
@@ -149,14 +150,5 @@
     }
      
      return flxSlider;
-    
-  })
-  
-  
-  FlexibleSlider({
-    slider : '.slider',
-    wait : 6000,
-    animationDuration: 4000,
-    autoplay: true
     
   })
