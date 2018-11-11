@@ -1,0 +1,21 @@
+{
+  "name": "flexible-sliderjs",
+  "version": "1.0.0",
+  "description": "An easy to use JavaScript package for building amazing sliders/carousels/galleries",
+  "main": "src/flexible-slider.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "homepage": "https://github.com/iamqamarali/flexible-slider.git",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/iamqamarali/flexible-slider.git"
+  },
+  "keywords": [
+    "slider",
+    "carousel",
+    "gallery"
+  ],
+  "author": "Qamar Ali",
+  "license": "MIT"
+}
