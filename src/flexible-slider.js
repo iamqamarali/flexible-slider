@@ -1,154 +1,159 @@
 (function(factory , undefined){
   
-    if(typeof window != 'undefined')
-      window.FlexibleSlider = factory()
-    if(typeof exports == 'object'  ){
-      module.exports = factory()  
-    }
-    
-  })(function(){
-    
-     let FlexibleSlider = function(opts){
-       this.settings = Object.assign({}, flxSlider.defaults, opts)
-       
-       if( typeof opts.slider == "string" )
-          this.slider = document.querySelector(opts.slider)
-        else if(opts.slider instanceof HTMLElement)
-          this.slider = opts.slider
-       
-       this.slides = Array.from(this.slider.children)
-       this.currentIndex = 0
-       
-       this.waitInterval = null
-       this.animationInterval = null
-       
-       this.currentSlide = null
-       this.prevSlide = null
-       
-       this.isAnimating = false
-       
-       this.init()
-     }
-      
-     FlexibleSlider.prototype.init = function(){
-       let c = this.settings.classes
-       if(this.slides.length){
-         
-         this.slider.classList.add(c.slider)       
-         this.slider.classList.add(c.modes[this.settings.mode])
-         
-         this.slides.forEach(slide => {
-           slide.classList.add(c.slide.all)
-         })
-         
-         this.currentSlide = this.slides[this.currentIndex++]
-         this.currentSlide.classList.add(c.slide.active)
+  if(typeof window != 'undefined')
+    window.FlexibleSlider = factory()
+  if(typeof exports == 'object'  ){
+    module.exports = factory()  
+  }
   
-         // sliderWrapper
-         this.sliderWrapper = document.createElement('div')
-         this.sliderWrapper.classList.add(c.sliderWrapper)
-         
-         // slider inner
-         this.sliderInner = document.createElement('div')
-         this.sliderInner.classList.add(c.sliderInner)
-         
-         let parent = this.slider.parentNode
-         parent.replaceChild(this.sliderWrapper, this.slider)
-         
-         this.sliderWrapper.appendChild(this.sliderInner)
-         this.sliderInner.appendChild(this.slider)
-                
-         if(this.settings.autoplay){
-           this.waitInterval = setTimeout(()=>{
-              this.next()           
-           }, this.settings.wait)
-         }
-         
-       }
-     }
-    
+})(function(){
+  
+   let FlexibleSlider = function(opts){
+     this.settings = Object.assign({}, flxSlider.defaults, opts)
      
-     FlexibleSlider.prototype.next = function(){
-        let c = this.settings.classes
-        
-        if(this.isAnimating)
-          return 
-  
+     if( typeof opts.slider == "string" )
+        this.slider = document.querySelector(opts.slider)
+      else if(opts.slider instanceof HTMLElement)
+        this.slider = opts.slider
+     
+     this.slides = Array.from(this.slider.children)
+     this.placeholderSlide = null
+     
+     this.currentIndex = 0
+     
+     this.waitInterval = null
+     this.animationInterval = null
+     
+     this.currentSlide = null
+     this.prevSlide = null
+     
+     this.isAnimating = false
+     
+     this.init()
+   }
+    
+   FlexibleSlider.prototype.init = function(){
+     let c = this.settings.classes
+     if(this.slides.length){
        
-       this.currentSlide.classList.remove(c.slide.active)
-       this.currentSlide.classList.add(c.slide.animatingOut)       
-       this.isAnimating = true
+       this.slider.classList.add(c.slider)       
+       this.slider.classList.add(c.modes[this.settings.mode])
        
-      
-       this.prevSlide = this.currentSlide
-       this.currentSlide = this.slides[this.currentIndex % this.slides.length]
+       this.placeholderSlide = this.slides[0].cloneNode(true)
+       this.placeholderSlide.classList.add(c.slide.placeholder)
+       this.slider.insertBefore(this.placeholderSlide, this.slides[0])
        
+       this.slides.forEach(slide => {
+         slide.classList.add(c.slide.all)
+       })
        
+       this.currentSlide = this.slides[this.currentIndex++]
        this.currentSlide.classList.add(c.slide.active)
-       this.currentSlide.classList.add(c.slide.animatingIn)
+
+       // sliderWrapper
+       this.sliderWrapper = document.createElement('div')
+       this.sliderWrapper.classList.add(c.sliderWrapper)
        
-       this.currentIndex++
+       // slider inner
+       this.sliderInner = document.createElement('div')
+       this.sliderInner.classList.add(c.sliderInner)
        
+       let parent = this.slider.parentNode
+       parent.replaceChild(this.sliderWrapper, this.slider)
        
+       this.sliderWrapper.appendChild(this.sliderInner)
+       this.sliderInner.appendChild(this.slider)
+              
+       if(this.settings.autoplay){
+         this.waitInterval = setTimeout(()=>{
+            this.next()           
+         }, this.settings.wait)
+       }
        
-       this.animationInterval = setTimeout(()=>{       
-         
-         this.prevSlide.classList.remove(c.slide.animatingOut)
-         this.currentSlide.classList.remove(c.slide.animatingIn)
-         this.isAnimating = false
-         
-         if(this.settings.autoplay){
-           this.waitInterval = setTimeout(()=>{
-              this.next()           
-           }, this.settings.wait)
-         }
+     }
+   }
   
-         
-       }, this.settings.animationDuration )
-       
-       
-     }
-       
-     FlexibleSlider.prototype.back = function(){
-       
-     }
-       
-     FlexibleSlider.prototype.go = function(){
-       
-     }
-       
-    
-     let flxSlider = function(opts){
-       return new FlexibleSlider(opts);
-     }
+   
+   FlexibleSlider.prototype.next = function(){
+      let c = this.settings.classes
+      
+      if(this.isAnimating)
+        return 
+
      
-     flxSlider.extend = function(functions){
-       
-     }
+     this.currentSlide.classList.remove(c.slide.active)
+     this.currentSlide.classList.add(c.slide.animatingOut)       
+     this.isAnimating = true
+     
     
-    flxSlider.defaults = {
-      wait: 5000,
-      animationDuration: 2000,
-      autoplay: true,
-      mode: 'gallery',
-      classes: {
-         slider : 'flx-slider',
-         sliderWrapper: 'flx-slider-wrapper',
-         sliderInner : 'flx-slider-inner',
-         slide :{
-           all : 'flx-slide',
-           active : 'flx-slide-active',
-           animatingOut : 'flx-slide-animating-out',
-           animatingIn : 'flx-slide-animating-in',         
-         },
-        modes:{
-          gallery : 'flx-slider-gallery',
-          slider : 'flx-slider-slider',
-          carousel : 'flx-slider-carousel'
-        }
+     this.prevSlide = this.currentSlide
+     this.currentSlide = this.slides[this.currentIndex % this.slides.length]
+     
+     
+     this.currentSlide.classList.add(c.slide.active)
+     this.currentSlide.classList.add(c.slide.animatingIn)
+     
+     this.currentIndex++
+     
+     
+     
+     this.animationInterval = setTimeout(()=>{       
+       
+       this.prevSlide.classList.remove(c.slide.animatingOut)
+       this.currentSlide.classList.remove(c.slide.animatingIn)
+       this.isAnimating = false
+              
+     }, this.settings.animationDuration )
+     
+     if(this.settings.autoplay){
+      this.waitInterval = setTimeout(()=>{
+         this.next()           
+      }, this.settings.wait)
+    }
+     
+   }
+     
+   FlexibleSlider.prototype.back = function(){
+     
+   }
+     
+   FlexibleSlider.prototype.go = function(){
+     
+   }
+     
+  
+   let flxSlider = function(opts){
+     return new FlexibleSlider(opts);
+   }
+   
+   flxSlider.extend = function(functions){
+     
+   }
+  
+  flxSlider.defaults = {
+    wait: 5000,
+    animationDuration: 2000,
+    autoplay: true,
+    mode: 'gallery',
+    classes: {
+       slider : 'flx-slider',
+       sliderWrapper: 'flx-slider-wrapper',
+       sliderInner : 'flx-slider-inner',
+       slide :{
+         all : 'flx-slide',
+         placeholder: 'flx-slide-placeholder',
+         active : 'flx-slide-active',
+         animatingOut : 'flx-slide-animating-out',
+         animatingIn : 'flx-slide-animating-in',         
+       },
+      modes:{
+        gallery : 'flx-slider-gallery',
+        slider : 'flx-slider-slider',
+        carousel : 'flx-slider-carousel'
       }
     }
-     
-     return flxSlider;
-    
-  })
+  }
+   
+   return flxSlider;
+  
+})

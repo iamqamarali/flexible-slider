@@ -2,7 +2,7 @@
   
 }
 .flx-slider-inner{
-  overflow: hidden
+  
 }
 
 /* slider */
@@ -80,17 +80,23 @@
 /* gallery styles */
 .flx-slider-gallery{
   position: relative;
+  overflow: hidden;
+}
+.flx-slider-gallery .flx-slide-placeholder{
+  visibility: hidden
 }
 
 .flx-slider-gallery .flx-slide{
   position: absolute;
   top: 0;
   left: 0;
+  right: 0;
+  bottom: 0;
   transition: all 2s ease;
-  opacity: 0
+  opacity: 0;
+  max-width: 100%;
 }
 .flx-slider-gallery .flx-slide-active{
-    position: relative;
     opacity: 1;
  } 
 
@@ -105,3 +111,6 @@
 .flx-slider-carousel{
   
 }
+
+
+
