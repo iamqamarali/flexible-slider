@@ -8,7 +8,7 @@
   
 })(function(){
   
-   let FlexibleSlider = function(opts){
+   var FlexibleSlider = function(opts){
      this.settings = Object.assign({}, flxSlider.defaults, opts)
      
      if( typeof opts.slider == "string" )
@@ -33,7 +33,7 @@
    }
     
    FlexibleSlider.prototype.init = function(){
-     let c = this.settings.classes
+     var c = this.settings.classes
      if(this.slides.length){
        
        this.slider.classList.add(c.slider)       
@@ -43,7 +43,7 @@
        this.placeholderSlide.classList.add(c.slide.placeholder)
        this.slider.insertBefore(this.placeholderSlide, this.slides[0])
        
-       this.slides.forEach(slide => {
+       this.slides.forEach(function(slide){
          slide.classList.add(c.slide.all)
        })
        
@@ -58,15 +58,16 @@
        this.sliderInner = document.createElement('div')
        this.sliderInner.classList.add(c.sliderInner)
        
-       let parent = this.slider.parentNode
+       var parent = this.slider.parentNode
        parent.replaceChild(this.sliderWrapper, this.slider)
        
        this.sliderWrapper.appendChild(this.sliderInner)
        this.sliderInner.appendChild(this.slider)
-              
+      
+       var self = this
        if(this.settings.autoplay){
-         this.waitInterval = setTimeout(()=>{
-            this.next()           
+         this.waitInterval = setTimeout(function(){
+          self.next()           
          }, this.settings.wait)
        }
        
@@ -75,7 +76,7 @@
   
    
    FlexibleSlider.prototype.next = function(){
-      let c = this.settings.classes
+      var c = this.settings.classes
       
       if(this.isAnimating)
         return 
@@ -96,18 +97,18 @@
      this.currentIndex++
      
      
-     
-     this.animationInterval = setTimeout(()=>{       
+     var self = this
+     this.animationInterval = setTimeout(function(){       
        
-       this.prevSlide.classList.remove(c.slide.animatingOut)
-       this.currentSlide.classList.remove(c.slide.animatingIn)
-       this.isAnimating = false
+        self.prevSlide.classList.remove(c.slide.animatingOut)
+        self.currentSlide.classList.remove(c.slide.animatingIn)
+        self.isAnimating = false
               
      }, this.settings.animationDuration )
      
      if(this.settings.autoplay){
-      this.waitInterval = setTimeout(()=>{
-         this.next()           
+      this.waitInterval = setTimeout(function(){
+        self.next()           
       }, this.settings.wait)
     }
      
@@ -122,7 +123,7 @@
    }
      
   
-   let flxSlider = function(opts){
+   var flxSlider = function(opts){
      return new FlexibleSlider(opts);
    }
    
